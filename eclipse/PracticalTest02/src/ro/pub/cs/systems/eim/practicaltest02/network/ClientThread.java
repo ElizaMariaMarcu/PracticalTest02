@@ -15,23 +15,26 @@ public class ClientThread extends Thread {
 
     private String address;
     private int port;
-    private String city;
-    private String informationType;
-    private TextView weatherForecastTextView;
+    private String operator1;
+    private String operator2;
+    private String operation;
+    private TextView operationResultTextView;
 
     private Socket socket;
 
     public ClientThread(
             String address,
             int port,
-            String city,
-            String informationType,
-            TextView weatherForecastTextView) {
+            String operator1,
+            String operator2,
+            String operation,
+            TextView operationResultTextView) {
         this.address = address;
         this.port = port;
-        this.city = city;
-        this.informationType = informationType;
-        this.weatherForecastTextView = weatherForecastTextView;
+        this.operator1 = operator1;
+        this.operator2 = operator2;
+        this.operation = operation;
+        this.operationResultTextView = operationResultTextView;
     }
 
     @Override
@@ -45,17 +48,17 @@ public class ClientThread extends Thread {
             BufferedReader bufferedReader = Utilities.getReader(socket);
             PrintWriter printWriter = Utilities.getWriter(socket);
             if (bufferedReader != null && printWriter != null) {
-                printWriter.println(city);
+            	String request = operation+","+operator1+","+operator2;
+                printWriter.println(request);
                 printWriter.flush();
-                printWriter.println(informationType);
-                printWriter.flush();
-                String weatherInformation;
-                while ((weatherInformation = bufferedReader.readLine()) != null) {
-                    final String finalizedWeatherInformation = weatherInformation;
-                    weatherForecastTextView.post(new Runnable() {
+ 
+                String line="";
+                while ((line = bufferedReader.readLine()) != null) {
+                    final String finalizedWeatherInformation = line;
+                    operationResultTextView.post(new Runnable() {
                         @Override
                         public void run() {
-                            weatherForecastTextView.append(finalizedWeatherInformation + "\n");
+                        	operationResultTextView.append(finalizedWeatherInformation + "\n");
                         }
                     });
                 }

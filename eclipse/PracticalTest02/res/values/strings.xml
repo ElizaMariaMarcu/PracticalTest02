@@ -20,5 +20,9 @@
 	    <item>humidity</item>
 	    <item>all</item>
   </string-array>
+	    <string name="operator1">Operator1</string>
+	    <string name="operator2">Operator2</string>
+	    <string name="add">Add</string>
+	    <string name="mul">Multiply</string>
 
 </resources>

@@ -21,12 +21,12 @@ public class PracticalTest02MainActivity extends Activity {
     private Button connectButton = null;
 
     // Client widgets
-    private EditText clientAddressEditText = null;
-    private EditText clientPortEditText = null;
+    private EditText operator1EdiText = null;
+    private EditText operator2EditText = null;
     private EditText cityEditText = null;
-    private Spinner informationTypeSpinner = null;
-    private Button getWeatherForecastButton = null;
-    private TextView weatherForecastTextView = null;
+    private Button addButton = null;
+    private Button mulButton = null;
+    private TextView operationResultTextView = null;
 
     private ServerThread serverThread = null;
     private ClientThread clientThread = null;
@@ -56,15 +56,13 @@ public class PracticalTest02MainActivity extends Activity {
         }
     }
 
-    private GetWeatherForecastButtonClickListener getWeatherForecastButtonClickListener = new GetWeatherForecastButtonClickListener();
-    private class GetWeatherForecastButtonClickListener implements Button.OnClickListener {
+    private OperationButtonClickListener operationButtonClickListener = new OperationButtonClickListener();
+    private class OperationButtonClickListener implements Button.OnClickListener {
 
         @Override
         public void onClick(View view) {
-            String clientAddress = clientAddressEditText.getText().toString();
-            String clientPort    = clientPortEditText.getText().toString();
-            if (clientAddress == null || clientAddress.isEmpty() ||
-                    clientPort == null || clientPort.isEmpty()) {
+            String  clientPort = serverPortEditText.getText().toString();
+            if (clientPort == null || clientPort.isEmpty()) {
                 Toast.makeText(
                         getApplicationContext(),
                         "Client connection parameters should be filled!",
@@ -78,10 +76,13 @@ public class PracticalTest02MainActivity extends Activity {
                 return;
             }
 
-            String city = cityEditText.getText().toString();
-            String informationType = informationTypeSpinner.getSelectedItem().toString();
-            if (city == null || city.isEmpty() ||
-                    informationType == null || informationType.isEmpty()) {
+            String operator1 = operator1EdiText.getText().toString();
+            String operator2 = operator2EditText.getText().toString();
+            Button op = (Button)view;
+            String operation =  op.getText().toString();
+            Log.v(Constants.TAG, operation);
+            if (operator1 == null || operator1.isEmpty() ||
+                    operator2 == null || operator2.isEmpty()) {
                 Toast.makeText(
                         getApplicationContext(),
                         "Parameters from client (city / information type) should be filled!",
@@ -90,14 +91,15 @@ public class PracticalTest02MainActivity extends Activity {
                 return;
             }
 
-            weatherForecastTextView.setText(Constants.EMPTY_STRING);
+            operationResultTextView.setText(Constants.EMPTY_STRING);
 
             clientThread = new ClientThread(
-                    clientAddress,
+                    Constants.ADDRESS,
                     Integer.parseInt(clientPort),
-                    city,
-                    informationType,
-                    weatherForecastTextView);
+                    operator1,
+                    operator2,
+                    operation,
+                    operationResultTextView);
             clientThread.start();
         }
     }
@@ -111,13 +113,18 @@ public class PracticalTest02MainActivity extends Activity {
         connectButton = (Button)findViewById(R.id.connect_button);
         connectButton.setOnClickListener(connectButtonClickListener);
 
-        clientAddressEditText = (EditText)findViewById(R.id.client_address_edit_text);
-        clientPortEditText = (EditText)findViewById(R.id.client_port_edit_text);
-        cityEditText = (EditText)findViewById(R.id.city_edit_text);
-        informationTypeSpinner = (Spinner)findViewById(R.id.information_type_spinner);
-        getWeatherForecastButton = (Button)findViewById(R.id.get_weather_forecast_button);
-        getWeatherForecastButton.setOnClickListener(getWeatherForecastButtonClickListener);
-        weatherForecastTextView = (TextView)findViewById(R.id.weather_forecast_text_view);
+        operator1EdiText = (EditText)findViewById(R.id.operator1_edit_text);
+        operator2EditText = (EditText)findViewById(R.id.operator2_edit_text);
+        serverPortEditText = (EditText)findViewById(R.id.server_port_edit_text);
+        connectButton = (Button)findViewById(R.id.connect_button);
+        addButton = (Button)findViewById(R.id.add_button);
+        addButton.setText("add");
+        mulButton = (Button)findViewById(R.id.mul_button);
+        mulButton.setText("mul");
+        connectButton.setOnClickListener(connectButtonClickListener);
+        addButton.setOnClickListener(operationButtonClickListener);
+        mulButton.setOnClickListener(operationButtonClickListener);
+        operationResultTextView = (TextView)findViewById(R.id.operation_result_text_view);
     }
 
     @Override

@@ -1,12 +1,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/add_buton"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:orientation="vertical"
     tools:context="ro.pub.cs.systems.eim.practicaltest02.graphicuserinterface.PracticalTest02MainActivity" >
 
     <TextView
@@ -74,10 +75,10 @@
             android:layout_weight="1">
         
             <EditText
-                android:id="@+id/client_address_edit_text"
+                android:id="@+id/operator1_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/client_address" />
+                android:hint="@string/operator1" />
         
         </ScrollView>
         
@@ -87,10 +88,10 @@
             android:layout_weight="1">
         
             <EditText
-                android:id="@+id/client_port_edit_text"
+                android:id="@+id/operator2_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/client_port" />
+                android:hint="@string/operator2" />
         
         </ScrollView>
         
@@ -101,33 +102,22 @@
         android:layout_height="wrap_content"
         android:rowCount="2"
         android:columnCount="2">
-        
-        <EditText
-            android:id="@+id/city_edit_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="5"
-            android:hint="@string/city"
-            android:layout_row="0"
-            android:layout_column="0" />
-        
-        <Spinner
-            android:id="@+id/information_type_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:entries="@array/information_types"
-            android:layout_row="1"
-            android:layout_column="0" />
-        
+
         <Button
-            android:id="@+id/get_weather_forecast_button"
+            android:id="@+id/add_button"
+            android:layout_column="1"
+            android:layout_gravity="left|center_vertical"
+            android:layout_row="1"
+            android:text="@string/add" />
+
+        <Button
+            android:id="@+id/mul_button"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/get_weather_forecast"
-            android:layout_row="0"
-            android:layout_rowSpan="2"
-            android:layout_column="1" />
+            android:layout_column="1"
+            android:layout_gravity="right|top"
+            android:layout_row="1"
+            android:text="@string/mul" />
         
     </GridLayout>
 
@@ -136,7 +126,7 @@
         android:layout_height="match_parent">
     
 	    <TextView
-	        android:id="@+id/weather_forecast_text_view"
+	        android:id="@+id/operation_result_text_view"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        android:singleLine="false"
